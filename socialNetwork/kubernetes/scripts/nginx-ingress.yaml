@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+  generation: 1
+  labels:
+    app: deathstarbench
+  name: nginx-ingress
+  namespace: social-network
+spec:
+  rules:
+  - http:
+      paths:
+      - backend:
+          serviceName: nginx-ingress
+          servicePort: 8080
+        path: /dashboard/?(.*)
+status:
+  loadBalancer:
+    ingress:
+    - ip: 10.1.20.194
+    - ip: 10.1.20.195
+    - ip: 10.1.20.196
